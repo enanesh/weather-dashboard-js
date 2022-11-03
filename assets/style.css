@@ -1,8 +1,37 @@
 
 
-h1{
+
+.jumbotron {
+    text-align: center;
+    background-color: transparent;
+    border-radius: 0;
     text-align: center;
     color: white;
-    background-image:linear-gradient(red, yellow);
-    padding:40px;
-}
+    background-image: linear-gradient(blue, purple);
+    padding: 40px;
+ }
+
+
+ .division-input{
+    border-bottom: solid;
+    border-color: gray;
+    padding-bottom:10px;
+    
+
+
+ }
+
+
+
+
+ .btn{
+    margin-top:20px;
+
+ }
+
+
+
+ 
+
+/*Sets the style for the input*/
+
