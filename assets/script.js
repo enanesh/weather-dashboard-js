@@ -9,7 +9,6 @@ var lat = "";
 //THIS GETS THE 5 DAY FORECAST 
 var ipaCall5day = "api.openweathermap.org/data/2.5/forecast?lat=51.5073219&lon=-0.1276474&ctn=6&appid=fa199b1fa16945296c4472000a55f603"
 
-//THIS GETS THE NAME OF THE CITY
 
 
 
@@ -37,14 +36,29 @@ function inputStorage() {
 
         console.log(city);
         citiesButtons();
-       
+        cityUrl(city.val());
+
     });
 
 
 }
-cityUrl();
-inputStorage()
+
+inputStorage();
 citiesButtons();
+
+
+
+//LOOKS INTO LOCAL STORAGE AND GETS THE LAST ARRAY ITEM
+var urlArray = JSON.parse(localStorage.getItem("cities"));
+
+console.log(urlArray);
+
+if (urlArray != null) {
+    var city = urlArray[urlArray.length - 1];
+    cityUrl(city);
+}
+
+
 
 
 //CREATES THE BUTTONS WITH THE NAMES OF THE ALREADY SEARCHED 
@@ -73,57 +87,78 @@ function citiesButtons() {
 }
 
 
+
+
 //CREATES THE URL FOR THE FIRST API CALL
 
-function cityUrl() {
-    
-    var UrlArray = JSON.parse(localStorage.getItem("cities"));
+function cityUrl(cityName) {
 
-    console.log(UrlArray);
+    console.log(cityName);
 
-    var city= UrlArray[UrlArray.length - 1];
-     
-    console.log(city);
-
-    var ApiCallNameCity = "http://api.openweathermap.org/geo/1.0/direct?q=" + city + "&appid=" + apiString;
-
-
-
-    function getApi(requestUrl) {
-        fetch(requestUrl)
-            .then(function (response) {
-                console.log(response.status);
-                //  Conditional for the the response.status.
-                if (response.status !== 200) {
-                    // Place the response.status on the page.
-                    responseText.textContent = response.status;
-                }
-                return response.json();
-            })
-            .then(function (data) {
-                // Make sure to look at the response in the console and read how 404 response is structured.
-
-
-                
-                console.log(data);
-            });
-    }
+    var ApiCallNameCity = "http://api.openweathermap.org/geo/1.0/direct?q=" + cityName + "&appid=" + apiString;
 
     getApi(ApiCallNameCity);
 
+}
 
+
+// CREATES THE URL FOR THE 5 DAY FORECAST 
+
+function getForecast(lat, lon,)
+{
     
 
+    var apiCall5day = "http://api.openweathermap.org/data/2.5/forecast?lat=" + lat + "&lon=" + lon+ "&appid=fa199b1fa16945296c4472000a55f603";
+    
 
-
+    console.log(apiCall5day);
+    getApiForecast(apiCall5day)
 
 }
 
 
 
+// CALLS THE GEOAPI FOR THE LAT LON INFO
+
+function getApi(requestUrl) {
+    fetch(requestUrl)
+        .then(function (response) {
+            console.log(response.status);
+            if (response.status !== 200) {      
+               console.log("There was an error")
+            }
+            return response.json();
+        })
+        .then(function (data) {
+        
+
+            console.log(data);
+            getForecast(data[0].lat, data[0].lon)
+        });
+}
 
 
 
+//API CALL FOR THE 5 DAY FORECAST 
 
+function getApiForecast(requestUrl) {
+    fetch(requestUrl)
+        .then(function (response) {
+            console.log(response.status);
+            if (response.status !== 200) {
+                console.log("There was an error")
+            }
+            return response.json();
+        })
+        .then(function (data) {
+            
+
+            console.log(data);
+            
+        });
+}
+
+
+//GETS DATA FROM API CALL AND CREATES CARDS 
 
 
