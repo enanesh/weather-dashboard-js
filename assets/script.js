@@ -50,6 +50,9 @@ function inputStorage() {
 inputStorage()
 
 
+
+
+
 // create the for loop for the buttons 
 
 //store the api (lon,lat) variables for the ne api call 
@@ -58,7 +61,23 @@ inputStorage()
 
 
 
+function citiesButtons() {
+
+    var citiesLocalstorage = [JSON.parse(localStorage.getItem("cities"))];
+
+    console.log(citiesLocalstorage.length);
+
+    for (i = 0; i < citiesLocalstorage.length; i++){
+        
+        
+        console.log(citiesLocalstorage[i]);
+
+    }
+
+    
+
+   
+}
 
 
-
-
+citiesButtons()
