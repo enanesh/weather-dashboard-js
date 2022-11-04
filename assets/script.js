@@ -1,6 +1,6 @@
 //VARIABLES 
 
-var apiString= "fa199b1fa16945296c4472000a55f603";
+var apiString = "fa199b1fa16945296c4472000a55f603";
 var city = "";
 var lon = "";
 var lat = "";
@@ -9,15 +9,11 @@ var lat = "";
 //THIS GETS THE 5 DAY FORECAST 
 var ipaCall5day = "api.openweathermap.org/data/2.5/forecast?lat=51.5073219&lon=-0.1276474&ctn=6&appid=fa199b1fa16945296c4472000a55f603"
 
-
-//maybe i need to limit this parameters to show only the first element in the array 
+//THIS GETS THE NAME OF THE CITY
 var ipaCallNameCity = "http://api.openweathermap.org/geo/1.0/direct?q=london&appid=fa199b1fa16945296c4472000a55f603"
 
 
-
 var queryUrl = "";
-
-
 
 
 //LOCAL STORAGE FOR USER INPUT 
@@ -30,54 +26,84 @@ function inputStorage() {
         if (item == null) {
             item = [city.val()]
         }
-        else
-        {
+        else {
             if (item.includes(city.val())) {
-            
+
             } else {
                 item.push(city.val());
-            }  
+            }
         }
         localStorage.setItem("cities", JSON.stringify(item));
-        
+
         console.log(city);
-        
+        citiesButtons();
+
     });
 
 
 }
 
 inputStorage()
+citiesButtons();
 
 
-
-
-
-// create the for loop for the buttons 
-
-//store the api (lon,lat) variables for the ne api call 
-
-//fix the content into the boxes 
-
-
+//CREATES THE BUTTONS WITH THE NAMES OF THE ALREADY SEARCHED 
 
 function citiesButtons() {
 
-    var citiesLocalstorage = [JSON.parse(localStorage.getItem("cities"))];
+    $('#listCities').empty();
 
-    console.log(citiesLocalstorage.length);
+    var citiesLocalstorage = JSON.parse(localStorage.getItem("cities"));
 
-    for (i = 0; i < citiesLocalstorage.length; i++){
-        
-        
-        console.log(citiesLocalstorage[i]);
 
+    for (i = 0; i < citiesLocalstorage.length; i++) {
+
+
+        var btn = $('<button/>', {
+            text: citiesLocalstorage[i],
+            id: citiesLocalstorage[i],
+        });
+        var list = $('<li>');
+        list.append(btn);
+        $("#listCities").append(list);
+
+        console.log(citiesLocalstorage[i])
     }
 
-    
-
-   
 }
 
 
-citiesButtons()
+//CREATES THE URL FOR THE FIRST API CALL
+
+function cityUrl() {
+    
+
+    console.log()
+
+    
+}
+
+
+
+
+
+
+
+function getApi(requestUrl) {
+    fetch(requestUrl)
+        .then(function (response) {
+            console.log(response.status);
+            //  Conditional for the the response.status.
+            if (response.status !== 200) {
+                // Place the response.status on the page.
+                responseText.textContent = response.status;
+            }
+            return response.json();
+        })
+        .then(function (data) {
+            // Make sure to look at the response in the console and read how 404 response is structured.
+            console.log(data);
+        });
+}
+
+getApi(badRequestUrl);
