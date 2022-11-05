@@ -87,8 +87,6 @@ function citiesButtons() {
 }
 
 
-
-
 //CREATES THE URL FOR THE FIRST API CALL
 
 function cityUrl(cityName) {
@@ -104,18 +102,13 @@ function cityUrl(cityName) {
 
 // CREATES THE URL FOR THE 5 DAY FORECAST 
 
-function getForecast(lat, lon,)
-{
-    
+function getForecast(lat, lon,) {
 
-    var apiCall5day = "http://api.openweathermap.org/data/2.5/forecast?lat=" + lat + "&lon=" + lon+ "&appid=fa199b1fa16945296c4472000a55f603";
-    
+    var apiCall5day = "http://api.openweathermap.org/data/2.5/forecast?lat=" + lat + "&lon=" + lon + "&units=imperial&appid=fa199b1fa16945296c4472000a55f603";
 
-    console.log(apiCall5day);
     getApiForecast(apiCall5day)
 
 }
-
 
 
 // CALLS THE GEOAPI FOR THE LAT LON INFO
@@ -124,16 +117,16 @@ function getApi(requestUrl) {
     fetch(requestUrl)
         .then(function (response) {
             console.log(response.status);
-            if (response.status !== 200) {      
-               console.log("There was an error")
+            if (response.status !== 200) {
+                console.log("There was an error")
             }
             return response.json();
         })
         .then(function (data) {
-        
 
             console.log(data);
-            getForecast(data[0].lat, data[0].lon)
+            getForecast(data[0].lat, data[0].lon);
+
         });
 }
 
@@ -150,11 +143,14 @@ function getApiForecast(requestUrl) {
             }
             return response.json();
         })
-        .then(function (data) {
-            
+        .then(function (forecastData) {
 
-            console.log(data);
-            
+            // console.log(forecastData);
+
+            forecastLogic(forecastData);
+
+
+
         });
 }
 
@@ -162,3 +158,76 @@ function getApiForecast(requestUrl) {
 //GETS DATA FROM API CALL AND CREATES CARDS 
 
 
+function forecastLogic(forecastData) {
+    $('#forecastCards').empty();
+
+    console.log(forecastData.list);
+
+    for (var i = 0; i < forecastData.list.length; i += 8) {
+        
+        var dayString = forecastData.list[i].dt_txt;
+        var tempString = forecastData.list[i].main.temp;
+        var iconString = forecastData.list[i].weather[0].icon;
+
+        var windString = forecastData.list[i].wind.speed;
+        var humidityString = forecastData.list[i].main.humidity;
+        
+
+        var cardEl = $("<div/>", {
+            class: "card",
+        });
+        $("#forecastCards").append(cardEl);
+        
+        
+        var cardBodyEl = $("<div/>", {
+            class: "card-body",
+        });
+        cardEl.append(cardBodyEl);
+
+        var cardtittleEl = $("<h6/>", {
+            text:  dayString.slice(0,10),
+            class: "card-title",
+
+        });
+        cardBodyEl.append(cardtittleEl);  
+
+        var cardIconEl = $("<img />",{
+            src:"http://openweathermap.org/img/wn/"+iconString+ "@2x.png",
+            
+        });
+        cardBodyEl.append(cardIconEl);
+
+        var cardTempEl = $("<div/>", {
+            text: "Temp:" + tempString + "°F",
+            class:"card-text",
+        })
+        cardBodyEl.append(cardTempEl);
+
+        
+        var cardWindEl = $("<div/>", {
+            text:"wind:" + windString + "MPH",
+            class: "card-text",
+        })
+        cardBodyEl.append(cardWindEl);
+
+
+        var cardHumEl = $("<div/>", {
+            text:"Humidity: "+ humidityString +"%",
+            class: "card-text",
+        })
+        cardBodyEl.append(cardHumEl);
+
+
+
+
+        
+        console.log(dayString)
+        console.log(tempString)
+        console.log(windString)
+        console.log(humidityString)
+        console.log(iconString)
+
+    }
+
+
+}
