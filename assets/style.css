@@ -1,3 +1,7 @@
+.body{
+   background-color: whitesmoke;
+}
+
 
 .jumbotron {
     text-align: center;
@@ -5,34 +9,70 @@
     border-radius: 0;
     text-align: center;
     color: white;
-    background-image: linear-gradient(blue, purple);
-    padding: 40px;
+    background-image: linear-gradient(rgb(58, 99, 196), whitesmoke);
+  
  }
 
 
  .division-input{
+     
+   margin-top: 80px;
+   margin-bottom: 50px;
     border-bottom: solid;
     border-color: gray;
-    padding-bottom:10px;
+    padding-bottom:40px;
     
 
  }
 
+ 
  .box{
-   border-color: gray;
-   border-style: solid;
+   margin-left: 20px;
+  
  }
 
+ .boxToday{
+   margin-left: 15px;
+   border-color: rgb(233, 231, 231);
+   border-radius: 7px;
+   border-style: solid;
+   margin-bottom: 4px;
+   background-color: white;
+  
+   
+ }
+
+ .fakedivision{
+   height: 2px;
+
+ }
+
+ .forecastText{
+   padding-top: 20px;
+   font-size: x-large;
+   margin-bottom: 30px;
+
+ }
 
 
  .btn{
-    margin-top:20px;
+    margin-top:30px;
+
 
  }
 
+.card-form{
+   background-color: #2152ad;
+   border-radius: 7px;
 
+}
 
- 
+.currentDayText{
+   padding-top: 20px;
 
-/*Sets the style for the input*/
+}
 
+.searchText{
+  text-align: center;
+
+}

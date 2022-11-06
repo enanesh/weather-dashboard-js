@@ -62,9 +62,10 @@ function citiesButtons() {
     $('#listCities').empty();
 
     var citiesLocalstorage = JSON.parse(localStorage.getItem("cities"));
-    if (citiesLocalstorage == null)
-    {
-        return; 
+    if (citiesLocalstorage == null) {
+        return;
+    } else if (citiesLocalstorage == " ") {
+        return;
     }
 
 
@@ -186,7 +187,7 @@ function getApiCurrent(requestUrl) {
         .then(function (currentData) {
 
             currentLogic(currentData);
-            console.log(currentData);
+            // console.log(currentData);
 
 
         });
@@ -214,17 +215,17 @@ function forecastLogic(forecastData) {
 
 
         var cardEl = $("<div/>", {
-            class: "card",
+            class: "card card-form",
         });
         $("#forecastCards").append(cardEl);
 
 
         var cardBodyEl = $("<div/>", {
-            class: "card-body",
+            class: "card-body ",
         });
         cardEl.append(cardBodyEl);
 
-        var cardtittleEl = $("<h6/>", {
+        var cardtittleEl = $("<h5/>", {
             text: dayString.slice(0, 10),
             class: "card-title",
 
@@ -284,7 +285,7 @@ function currentLogic(currentData,date) {
     
     var currentTittleEl = $("<h3/>", {
         text: todayCityName +"  "+"("+ date+")",
-        class: "",
+        class: "currentDayText",
     });
     $("#currentDisplay").append(currentTittleEl);
 

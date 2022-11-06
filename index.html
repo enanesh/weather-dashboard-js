@@ -18,14 +18,18 @@
     />
   </head>
 
-  <header class="jumbotron">
-    <h1>Weather Dashboard</h1>
-  </header>
+ 
 
-  <body>
-    <div class="container-flex">
+
+  <body class="body">
+
+    <header class="jumbotron">
+    <h1>Weather Dashboard</h1>
+    </header>
+
+    <div class="container-flex box">
       <!--SEARCH CITY FORM-->
-      <div id="row1" class="row">
+      <div id="row1" class="row ">
         <div class="col-md-2">
           <form id="search-form" class=" container division-input" >
             <h5>Search for a city:</h5>
@@ -39,35 +43,24 @@
           </form>
         </div>
 
-        <!--TODAY WEATHER INFO DISPLAY-->
-        <div id="currentDisplay" class="col-md-7 box">
-          <!-- <h3>Atlanta</h3>
-          <p>Temp </p>
-          <p>Wind <p>
-            -->
+        <!--TODAYS WEATHER INFO DISPLAY-->
+        <div id="currentDisplay" class="col-md-7 boxToday">
         </div>
       </div>
 
 
-   
-
-      
-
-       <!--EMPTY COLUM JUST FOR DIVISION -->
+       <!--TEXT COLUMS -->
 
         <div id="row2" class="row">
+        <div class="col-md-2"><h4 class="searchText">Search History</h4> </div> 
 
-        <div class="col-md-2"> </div> 
-
-      
 
         
-      <div class=" col-md-10">
-      <p>Forecast 5 days</p>
+      <div class=" col-md-10 forecastText">
+      <h3> 5-Day Forecast:</h3>
       </div>
        </div>   
-        
-
+  
           <!--CITIES SERCHED BEFORE -->
 
         <div class="row">
@@ -76,13 +69,7 @@
           </div>
           
         </div>
-
-
-
-
-
-
-          
+  
         <!--5 DAY FORECAST CARDS -->
         <div id=forecastCards class="card-deck col-md-10">   
       </div>
