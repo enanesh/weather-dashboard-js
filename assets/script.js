@@ -48,6 +48,9 @@ if (urlArray != null) {
     var city = urlArray[urlArray.length - 1];
     cityUrl(city);
 }
+else {
+    cityUrl("seattle")
+}
 
 
 
@@ -59,6 +62,10 @@ function citiesButtons() {
     $('#listCities').empty();
 
     var citiesLocalstorage = JSON.parse(localStorage.getItem("cities"));
+    if (citiesLocalstorage == null)
+    {
+        return; 
+    }
 
 
     for (i = 0; i < citiesLocalstorage.length; i++) {
@@ -67,7 +74,13 @@ function citiesButtons() {
             text: citiesLocalstorage[i],
             id: citiesLocalstorage[i],
             class: "container btn btn-secondary"
-        });
+        }).click(function (e) {
+            e.preventDefault();
+            cityNameBtn = e.currentTarget.id
+            cityUrl(cityNameBtn);
+            console.log(cityNameBtn+"hello");   
+     
+    });
         var list = $('<div>');
         list.append(btn);
         $("#listCities").append(list);
@@ -105,7 +118,7 @@ function getForecast(lat, lon,) {
 
 function getCurrent(lat, lon) {
 
-    var currentUrl = "https://api.openweathermap.org/data/2.5/weather?lat=" + lat + "&lon=" + lon + "&appid=fa199b1fa16945296c4472000a55f603"
+    var currentUrl = "https://api.openweathermap.org/data/2.5/weather?lat=" + lat + "&lon=" + lon + "&units=imperial&appid=fa199b1fa16945296c4472000a55f603"
 
     getApiCurrent(currentUrl)
 
@@ -172,14 +185,12 @@ function getApiCurrent(requestUrl) {
         })
         .then(function (currentData) {
 
+            currentLogic(currentData);
             console.log(currentData);
-
 
 
         });
 }
-
-
 
 
 
@@ -227,14 +238,14 @@ function forecastLogic(forecastData) {
         cardBodyEl.append(cardIconEl);
 
         var cardTempEl = $("<div/>", {
-            text: "Temp:" + tempString + "°F",
+            text: "Temp: " + tempString + "°F",
             class: "card-text",
         })
         cardBodyEl.append(cardTempEl);
 
 
         var cardWindEl = $("<div/>", {
-            text: "wind:" + windString + "MPH",
+            text: "wind: " + windString + "MPH",
             class: "card-text",
         })
         cardBodyEl.append(cardWindEl);
@@ -260,3 +271,56 @@ function forecastLogic(forecastData) {
 
 //GETS API DATA AND FILLS THE BIG BOX 
 
+function currentLogic(currentData,date) {
+
+    $('#currentDisplay').empty();
+
+    var todayCityName = currentData.name;
+    var todayTempString = currentData.main.temp;
+    var todayHumString = currentData.main.humidity;
+    var todayWindString = currentData.wind.speed;
+    var todayIconString = currentData.weather[0].icon;
+    var date = moment().format('L');
+    
+    var currentTittleEl = $("<h3/>", {
+        text: todayCityName +"  "+"("+ date+")",
+        class: "",
+    });
+    $("#currentDisplay").append(currentTittleEl);
+
+    var currentIconEl = $("<img />", {
+        src: "http://openweathermap.org/img/wn/" + todayIconString + "@2x.png",
+
+    });
+    $("#currentDisplay").append(currentIconEl);
+
+    var currentTempEl = $("<p/>", {
+        text: "Temp: " + todayTempString + "°F",
+        class: "",
+    })
+    $("#currentDisplay").append(currentTempEl);
+
+
+    var currentWindEl = $("<p/>", {
+        text: "wind: " + todayWindString + "MPH",
+        class: "",
+    })
+    $("#currentDisplay").append(currentWindEl);
+
+    var currentHumEl = $("<p/>", {
+        text: "Humidity: " + todayHumString + "%",
+        class: "",
+    })
+    $("#currentDisplay").append(currentHumEl);
+
+
+
+
+    // console.log(todayCityName);
+    // console.log(todayTempString);
+    // console.log(todayHumString);
+    // console.log(todayWindString);
+    // console.log(todayIconString);
+    // console.log(date);
+    
+}
