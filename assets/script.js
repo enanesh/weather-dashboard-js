@@ -98,7 +98,7 @@ function cityUrl(cityName) {
 
     console.log(cityName);
 
-    var ApiCallNameCity = "http://api.openweathermap.org/geo/1.0/direct?q=" + cityName + "&appid=" + apiString;
+    var ApiCallNameCity = "https://api.openweathermap.org/geo/1.0/direct?q=" + cityName + "&appid=" + apiString;
 
     getApi(ApiCallNameCity);
 
@@ -109,7 +109,7 @@ function cityUrl(cityName) {
 
 function getForecast(lat, lon,) {
 
-    var apiCall5day = "http://api.openweathermap.org/data/2.5/forecast?lat=" + lat + "&lon=" + lon + "&units=imperial&appid=fa199b1fa16945296c4472000a55f603";
+    var apiCall5day = "https://api.openweathermap.org/data/2.5/forecast?lat=" + lat + "&lon=" + lon + "&units=imperial&appid=fa199b1fa16945296c4472000a55f603";
 
     getApiForecast(apiCall5day)
 
@@ -233,7 +233,7 @@ function forecastLogic(forecastData) {
         cardBodyEl.append(cardtittleEl);
 
         var cardIconEl = $("<img />", {
-            src: "http://openweathermap.org/img/wn/" + iconString + "@2x.png",
+            src: "https://openweathermap.org/img/wn/" + iconString + "@2x.png",
 
         });
         cardBodyEl.append(cardIconEl);
@@ -290,7 +290,7 @@ function currentLogic(currentData,date) {
     $("#currentDisplay").append(currentTittleEl);
 
     var currentIconEl = $("<img />", {
-        src: "http://openweathermap.org/img/wn/" + todayIconString + "@2x.png",
+        src: "https://openweathermap.org/img/wn/" + todayIconString + "@2x.png",
 
     });
     $("#currentDisplay").append(currentIconEl);
