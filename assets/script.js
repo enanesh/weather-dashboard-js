@@ -6,15 +6,6 @@ var lon = "";
 var lat = "";
 
 
-//THIS GETS THE 5 DAY FORECAST 
-var ipaCall5day = "api.openweathermap.org/data/2.5/forecast?lat=51.5073219&lon=-0.1276474&ctn=6&appid=fa199b1fa16945296c4472000a55f603"
-
-
-
-
-var queryUrl = "";
-
-
 //LOCAL STORAGE FOR USER INPUT 
 
 function inputStorage() {
@@ -77,7 +68,7 @@ function citiesButtons() {
             id: citiesLocalstorage[i],
             class: "container btn btn-secondary"
         });
-        var list = $('<li>');
+        var list = $('<div>');
         list.append(btn);
         $("#listCities").append(list);
 
@@ -110,6 +101,17 @@ function getForecast(lat, lon,) {
 
 }
 
+//CREATES THE URL FOR TODAYS WEATHER
+
+function getCurrent(lat, lon) {
+
+    var currentUrl = "https://api.openweathermap.org/data/2.5/weather?lat=" + lat + "&lon=" + lon + "&appid=fa199b1fa16945296c4472000a55f603"
+
+    getApiCurrent(currentUrl)
+
+}
+
+
 
 // CALLS THE GEOAPI FOR THE LAT LON INFO
 
@@ -125,7 +127,9 @@ function getApi(requestUrl) {
         .then(function (data) {
 
             console.log(data);
+            getCurrent(data[0].lat, data[0].lon);
             getForecast(data[0].lat, data[0].lon);
+
 
         });
 }
@@ -155,6 +159,31 @@ function getApiForecast(requestUrl) {
 }
 
 
+//API CALL FOR THE CURRENT DATA 
+
+function getApiCurrent(requestUrl) {
+    fetch(requestUrl)
+        .then(function (response) {
+            console.log(response.status);
+            if (response.status !== 200) {
+                console.log("There was an error")
+            }
+            return response.json();
+        })
+        .then(function (currentData) {
+
+            console.log(currentData);
+
+
+
+        });
+}
+
+
+
+
+
+
 //GETS DATA FROM API CALL AND CREATES CARDS 
 
 
@@ -164,70 +193,70 @@ function forecastLogic(forecastData) {
     console.log(forecastData.list);
 
     for (var i = 0; i < forecastData.list.length; i += 8) {
-        
+
         var dayString = forecastData.list[i].dt_txt;
         var tempString = forecastData.list[i].main.temp;
         var iconString = forecastData.list[i].weather[0].icon;
 
         var windString = forecastData.list[i].wind.speed;
         var humidityString = forecastData.list[i].main.humidity;
-        
+
 
         var cardEl = $("<div/>", {
             class: "card",
         });
         $("#forecastCards").append(cardEl);
-        
-        
+
+
         var cardBodyEl = $("<div/>", {
             class: "card-body",
         });
         cardEl.append(cardBodyEl);
 
         var cardtittleEl = $("<h6/>", {
-            text:  dayString.slice(0,10),
+            text: dayString.slice(0, 10),
             class: "card-title",
 
         });
-        cardBodyEl.append(cardtittleEl);  
+        cardBodyEl.append(cardtittleEl);
 
-        var cardIconEl = $("<img />",{
-            src:"http://openweathermap.org/img/wn/"+iconString+ "@2x.png",
-            
+        var cardIconEl = $("<img />", {
+            src: "http://openweathermap.org/img/wn/" + iconString + "@2x.png",
+
         });
         cardBodyEl.append(cardIconEl);
 
         var cardTempEl = $("<div/>", {
             text: "Temp:" + tempString + "°F",
-            class:"card-text",
+            class: "card-text",
         })
         cardBodyEl.append(cardTempEl);
 
-        
+
         var cardWindEl = $("<div/>", {
-            text:"wind:" + windString + "MPH",
+            text: "wind:" + windString + "MPH",
             class: "card-text",
         })
         cardBodyEl.append(cardWindEl);
 
 
         var cardHumEl = $("<div/>", {
-            text:"Humidity: "+ humidityString +"%",
+            text: "Humidity: " + humidityString + "%",
             class: "card-text",
         })
         cardBodyEl.append(cardHumEl);
 
 
-
-
-        
-        console.log(dayString)
-        console.log(tempString)
-        console.log(windString)
-        console.log(humidityString)
-        console.log(iconString)
+        // console.log(dayString)
+        // console.log(tempString)
+        // console.log(windString)
+        // console.log(humidityString)
+        // console.log(iconString)
 
     }
 
 
 }
+
+//GETS API DATA AND FILLS THE BIG BOX 
+
